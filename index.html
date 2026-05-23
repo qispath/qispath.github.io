@@ -3,8 +3,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8" />
-    <title>qisheng193-ui</title>
-    <meta name="author" content="qisheng193-ui" />
+    <title>望月</title>
+    <meta name="author" content="望月" />
     <meta name="description" content="" />
     <meta name="keywords" content="" />
     <meta
@@ -52,8 +52,8 @@
         <transition name="fade">
             <div id="loading" v-show="loading">
                 <div id="loading-circle">
-                    <h2>LOADING</h2>
-                    <p>加载中，请稍候</p>
+                    <h2>加载中</h2>
+                    <p>请稍候</p>
                     <img src="/images/loading.gif" />
                 </div>
             </div>
@@ -61,7 +61,7 @@
         <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
     <nav id="desktop-menu">
         <a class="title" href="/">
-            <span>QISHENG193-UI</span>
+            <span>望月</span>
         </a>
         
         <a href="/">
@@ -93,7 +93,7 @@
     <nav id="mobile-menu">
         <div class="title" @click="showMenuItems = !showMenuItems">
             <i class="fa-solid fa-bars fa-fw"></i>
-            <span>&emsp;QISHENG193-UI</span>
+            <span>&emsp;望月</span>
         </div>
         <transition name="slide">
             <div class="items" v-show="showMenuItems">
@@ -156,7 +156,7 @@
     <div
         id="home-background"
         ref="homeBackground"
-        data-images="/images/banner.jpg"
+        data-images="/images/banner.png"
     ></div>
     <div id="home-info" @click="homeClick">
         <span class="loop"></span>
@@ -165,7 +165,7 @@
         <span class="loop"></span>
         <span class="info">
             <div class="wrap">
-                <h1>qisheng193-ui</h1>
+                <h1>望月</h1>
                 <h3></h3>
                 <h5></h5>
             </div>
@@ -241,9 +241,9 @@
         <div class="avatar">
             <img src="/images/avatar.jpg" alt="avatar" />
         </div>
-        <div class="name">qisheng193-ui</div>
+        <div class="name">望月</div>
         <div class="description">
-            <p>记录 CTF 学习、题解整理和折腾过程。</p>
+            <p>记录学习、折腾和喜欢的内容。</p>
 
         </div>
         
@@ -271,15 +271,15 @@
     <div id="footer-wrap">
         <div>
             &copy;
-            2026 - 2026 qisheng193-ui
+            2026 - 2026 望月
             <span id="footer-icon">
                 <i class="fa-solid fa-font-awesome fa-fw"></i>
             </span>
-            &commat;qisheng193-ui
+            &commat;望月
         </div>
         <div>
-            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
-            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+            基于 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 与
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX</a>
         </div>
         
     </div>
