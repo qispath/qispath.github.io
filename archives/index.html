@@ -212,22 +212,6 @@
             </div>
         </transition>
         
-        <transition name="toast-slide">
-            <div id="site-toast" v-show="toast.show">
-                <div class="site-toast-avatar">
-                    <img src="/images/avatar-profile.jpg" alt="toast avatar" />
-                </div>
-                <div class="site-toast-text">{{ toast.text }}</div>
-                <button
-                    class="site-toast-close"
-                    type="button"
-                    aria-label="关闭提示"
-                    @click="hideToast"
-                >
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-            </div>
-        </transition>
     </div>
     <script src="/js/main.js"></script>
     
