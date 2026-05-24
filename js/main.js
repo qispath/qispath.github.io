@@ -10,6 +10,7 @@ const app = Vue.createApp({
             renderers: [],
             originalTitle: "",
             titleTimer: null,
+            toastTimer: null,
         };
     },
     created() {
@@ -31,8 +32,30 @@ const app = Vue.createApp({
         if (this.titleTimer) {
             window.clearTimeout(this.titleTimer);
         }
+        if (this.toastTimer) {
+            window.clearTimeout(this.toastTimer);
+        }
     },
     methods: {
+        showToast(text) {
+            let toast = document.getElementById("site-toast");
+            if (!toast) {
+                toast = document.createElement("div");
+                toast.id = "site-toast";
+                toast.className = "site-toast";
+                document.body.appendChild(toast);
+            }
+
+            toast.textContent = text;
+            toast.classList.add("show");
+            if (this.toastTimer) {
+                window.clearTimeout(this.toastTimer);
+            }
+            this.toastTimer = window.setTimeout(() => {
+                toast.classList.remove("show");
+                this.toastTimer = null;
+            }, 1600);
+        },
         async copyText(text) {
             try {
                 if (navigator.clipboard && window.isSecureContext) {
@@ -48,9 +71,9 @@ const app = Vue.createApp({
                     document.execCommand("copy");
                     document.body.removeChild(input);
                 }
-                window.alert("邮箱已复制");
+                this.showToast("邮箱已复制");
             } catch (error) {
-                window.alert("复制失败，请手动复制：" + text);
+                this.showToast("复制失败，请手动复制：" + text);
             }
         },
         setPageTitle(text, duration = 0) {

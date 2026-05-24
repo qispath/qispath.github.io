@@ -167,7 +167,8 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            <div id="home-head">
+            
+<div id="home-head">
     <div
         id="home-background"
         ref="homeBackground"
@@ -182,7 +183,15 @@
             <div class="wrap">
                 <h1>望月</h1>
                 <h3></h3>
-                <h5>道阻且长，行则将至</h5>
+                <h5
+                    id="home-typed-line"
+                    ref="homeTypedLine"
+                    data-typewriter-texts="%5B%22%E9%81%93%E9%98%BB%E4%B8%94%E9%95%BF%EF%BC%8C%E8%A1%8C%E5%88%99%E5%B0%86%E8%87%B3%22%5D"
+                    data-typewriter-options="%7B%22enable%22%3Atrue%2C%22typeSpeed%22%3A120%2C%22backSpeed%22%3A46%2C%22startDelay%22%3A300%2C%22backDelay%22%3A1400%2C%22loop%22%3Atrue%7D"
+                >
+                    <span class="typed-text">道阻且长，行则将至</span>
+                    <span class="typed-cursor" aria-hidden="true"></span>
+                </h5>
             </div>
         </span>
     </div>
@@ -190,7 +199,7 @@
 <div
     id="home-posts-wrap"
     ref="homePostsWrap"
-    true
+    
 >
     <div id="home-posts">
         
