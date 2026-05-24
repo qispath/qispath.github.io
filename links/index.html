@@ -164,8 +164,7 @@
 </transition>
 
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
-            
-<div class="article">
+            <div class="article">
     <div>
         <h1>友链</h1>
     </div>
@@ -179,33 +178,8 @@
     </div>
 
     <div class="links-page">
-        <div class="links-banner">
-            <h2>朋友们常来的地方</h2>
-            <p>这里会慢慢整理我喜欢的网站、常逛的博客和愿意推荐的地方。页面先搭起来，后面我会继续补全真正的友链列表。</p>
-        </div>
-
-        <div class="links-grid">
-            <a class="link-card" href="https://qisheng193-ui.github.io/" target="_blank" rel="noopener">
-                <img class="link-card-avatar" src="/images/avatar-profile.jpg" alt="望月" />
-                <div class="link-card-body">
-                    <h3>望月</h3>
-                    <p>记录学习、折腾和喜欢的内容。</p>
-                    <span>qisheng193-ui.github.io</span>
-                </div>
-            </a>
-
-            <a class="link-card" href="https://github.com/qisheng193-ui" target="_blank" rel="noopener">
-                <div class="link-card-icon">
-                    <i class="fa-brands fa-github"></i>
-                </div>
-                <div class="link-card-body">
-                    <h3>GitHub</h3>
-                    <p>项目代码、脚本和一些零碎的折腾记录会放在这里。</p>
-                    <span>github.com/qisheng193-ui</span>
-                </div>
-            </a>
-
-            <a class="link-card" href="https://0xt5.github.io/" target="_blank" rel="noopener">
+        <div class="links-grid links-grid-single">
+            <a class="link-card link-card-compact" href="https://0xt5.github.io/" target="_blank" rel="noopener">
                 <img class="link-card-avatar" src="https://0xt5.github.io/images/custom-particlex-avatar.png" alt="0xt5" />
                 <div class="link-card-body">
                     <h3>0xt5</h3>
@@ -213,33 +187,6 @@
                     <span>0xt5.github.io</span>
                 </div>
             </a>
-        </div>
-
-        <div class="link-apply">
-            <h2>申请友链</h2>
-            <p>如果你也想交换友链，可以先按下面的格式准备信息。后面我会继续把联系方式和更多展示内容补上。</p>
-
-            <div class="link-apply-grid">
-                <div class="apply-box">
-                    <h3>本站信息</h3>
-                    <ul>
-                        <li>名称：望月</li>
-                        <li>地址：https://qisheng193-ui.github.io/</li>
-                        <li>简介：记录学习、折腾和喜欢的内容。</li>
-                        <li>头像：https://qisheng193-ui.github.io/images/avatar-profile.jpg</li>
-                    </ul>
-                </div>
-
-                <div class="apply-box">
-                    <h3>申请格式</h3>
-                    <ul>
-                        <li>站点名称</li>
-                        <li>站点地址</li>
-                        <li>站点简介</li>
-                        <li>头像地址</li>
-                    </ul>
-                </div>
-            </div>
         </div>
     </div>
 </div>

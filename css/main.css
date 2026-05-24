@@ -504,6 +504,10 @@
     gap: 20px;
     grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+.links-grid-single {
+    grid-template-columns: minmax(0, 860px);
+    justify-content: start;
+}
 .link-card {
     align-items: center;
     background: #fff;
@@ -517,6 +521,11 @@
     overflow: hidden;
     padding: 22px;
     transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.link-card-compact {
+    gap: 16px;
+    min-height: 112px;
+    padding: 18px 20px;
 }
 .link-card:hover {
     border-color: #9abbf7;
@@ -534,6 +543,12 @@
     box-shadow: 0 8px 18px #b9c3d84d;
     object-fit: cover;
 }
+.link-card-compact .link-card-avatar,
+.link-card-compact .link-card-icon {
+    border-radius: 18px;
+    height: 64px;
+    width: 64px;
+}
 .link-card-icon {
     align-items: center;
     background: linear-gradient(135deg, #5aa9ff 0%, #8d7dff 100%);
@@ -550,51 +565,24 @@
     font-size: 22px;
     margin-bottom: 8px;
 }
+.link-card-compact .link-card-body h3 {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
 .link-card-body p {
     color: #5c6b72;
     line-height: 1.8;
     margin-bottom: 10px;
+}
+.link-card-compact .link-card-body p {
+    font-size: 15px;
+    margin-bottom: 8px;
 }
 .link-card-body span {
     color: #7f8e99;
     display: inline-block;
     font-size: 13px;
     letter-spacing: 0.03em;
-}
-.link-apply {
-    background: #fff;
-    border-radius: 24px;
-    box-shadow: 0 12px 35px #d9d9d960;
-    padding: 28px 30px;
-}
-.link-apply h2 {
-    color: #22313a;
-    margin-bottom: 10px;
-}
-.link-apply > p {
-    color: #5c6b72;
-    line-height: 1.9;
-}
-.link-apply-grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    margin-top: 20px;
-}
-.apply-box {
-    background: linear-gradient(180deg, #f8fbff 0%, #f2f7ff 100%);
-    border: 1px solid #e7eeff;
-    border-radius: 18px;
-    padding: 20px;
-}
-.apply-box h3 {
-    color: #66afef;
-    margin-bottom: 12px;
-}
-.apply-box ul {
-    color: #5c6b72;
-    line-height: 1.9;
-    margin: 0;
 }
 .article .info .date {
     color: #5c6b72;
@@ -1087,12 +1075,8 @@ ol li {
     #menu #mobile-menu {
         display: block;
     }
-    .links-banner,
-    .link-apply {
-        padding: 22px 20px;
-    }
     .links-grid,
-    .link-apply-grid {
+    .links-grid-single {
         grid-template-columns: 1fr;
     }
     .link-card {
