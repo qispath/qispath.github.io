@@ -42,6 +42,34 @@
 #archives h3 {
     margin: 10px 0;
 }
+.archive-hub {
+    margin: 0 auto 36px;
+    max-width: 900px;
+}
+.archive-hub-copy {
+    margin-bottom: 18px;
+}
+.archive-hub-copy h2 {
+    margin: 0 0 8px;
+}
+.archive-hub-copy p {
+    color: #6f8391;
+    margin: 0;
+}
+.archive-category-links {
+    margin-bottom: 0 !important;
+    text-align: left !important;
+}
+.archive-category-links span {
+    margin: 8px 10px 8px 0 !important;
+}
+.archive-category-links span a {
+    box-shadow: 0 8px 18px #c5d6ee40;
+}
+.archive-category-links span a:hover {
+    color: #fff !important;
+    transform: translateY(-2px);
+}
 #crypto {
     margin: 50px 0;
 }
@@ -84,12 +112,12 @@
 #home-card #card-style {
     background: #fff;
     border: none;
-    border-radius: 10px;
-    box-shadow: 0 0 20px #d9d9d980;
+    border-radius: 28px;
+    box-shadow: 0 18px 42px #c7d7eb75;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
     max-height: 80vh;
-    justify-content: center;
     overflow: auto;
     position: sticky;
     text-align: center;
@@ -98,23 +126,69 @@
 }
 #home-card #card-div {
     overflow: auto;
-    padding: 25px 0;
+    padding: 30px 0 26px;
+}
+#home-card #card-div .avatar-stage {
+    padding: 10px 0 18px;
+    perspective: 1000px;
 }
 #home-card #card-div .avatar {
-    border: #f1f1f1 solid 3px;
+    background: linear-gradient(135deg, #ffffff 0%, #dce9ff 100%);
+    border: #f1f1f1 solid 4px;
     border-radius: 50%;
+    box-shadow:
+        0 14px 28px #b8c8e566,
+        inset 0 2px 0 #fff;
     height: 140px;
     margin: auto;
+    overflow: visible;
     text-align: center;
+    transform-style: preserve-3d;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
     width: 140px;
+}
+#home-card #card-div .avatar::before,
+#home-card #card-div .avatar::after {
+    border-radius: 50%;
+    content: "";
+    inset: -10px;
+    pointer-events: none;
+    position: absolute;
+}
+#home-card #card-div .avatar::before {
+    background: linear-gradient(135deg, rgba(129, 178, 255, 0.26), rgba(255, 164, 215, 0.3));
+    filter: blur(12px);
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+}
+#home-card #card-div .avatar::after {
+    border: 1px solid rgba(133, 181, 255, 0.28);
+    inset: -14px;
+    opacity: 0;
+    transition: opacity 0.35s ease, transform 0.35s ease;
 }
 #home-card #card-div .avatar img {
     border-radius: 50%;
     height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s ease, filter 0.45s ease;
     width: 100%;
 }
-#home-card #card-div .avatar:hover img {
-    transform: rotate(360deg);
+#home-card #card-div .avatar-stage:hover .avatar {
+    box-shadow:
+        0 22px 40px #adc6ee80,
+        inset 0 2px 0 #fff;
+    transform: translateY(-6px) rotateX(10deg) rotateY(-10deg);
+}
+#home-card #card-div .avatar-stage:hover .avatar::before,
+#home-card #card-div .avatar-stage:hover .avatar::after {
+    opacity: 1;
+    transform: scale(1.04);
+}
+#home-card #card-div .avatar-stage:hover .avatar img {
+    filter: saturate(1.08);
+    transform: scale(1.08) rotate(-4deg);
 }
 #home-card #card-div .description {
     margin: 20px auto;
@@ -138,6 +212,7 @@
     font-size: 18px;
     padding: 5px;
 }
+#home-card #card-div .card-directory a:hover,
 #home-card #card-div .icon-links a:hover,
 #home-card #card-div .friend-links a:hover,
 #home-posts .page-current .page-num:hover {
@@ -145,16 +220,74 @@
     color: #fff;
 }
 #home-card #card-div .icon-links,
-#home-card #card-div .friend-links {
+#home-card #card-div .friend-links,
+#home-card #card-div .card-directory {
     border-top: #cdcdcd solid 1px;
-    margin: 10px auto;
-    padding-top: 10px;
+    margin: 18px auto 0;
+    padding-top: 18px;
     width: 85%;
 }
 #home-card #card-div .name {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
-    margin: 20px auto;
+    margin: 10px auto 14px;
+}
+#home-card #card-div .card-directory {
+    text-align: left;
+}
+#home-card #card-div .card-directory-title {
+    color: #27444c;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    margin-bottom: 14px;
+}
+#home-card #card-div .card-directory-grid {
+    display: grid;
+    gap: 10px;
+}
+#home-card #card-div .card-directory-link {
+    align-items: center;
+    background: linear-gradient(135deg, #f7fbff 0%, #eef5ff 100%);
+    border: 1px solid #d8e6fb;
+    border-radius: 18px;
+    color: #27444c;
+    display: flex;
+    gap: 12px;
+    padding: 12px 14px;
+    transition: background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+}
+#home-card #card-div .card-directory-link:hover {
+    border-color: #bdd3fb;
+    box-shadow: 0 12px 24px #bfd0ea52;
+    transform: translateY(-3px);
+}
+#home-card #card-div .card-directory-icon {
+    align-items: center;
+    background: linear-gradient(135deg, #7cb7ff 0%, #a0c5ff 100%);
+    border-radius: 14px;
+    color: #fff;
+    display: inline-flex;
+    flex: 0 0 38px;
+    height: 38px;
+    justify-content: center;
+}
+#home-card #card-div .card-directory-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+#home-card #card-div .card-directory-body strong {
+    color: #27444c;
+    font-size: 14px;
+    line-height: 1.4;
+}
+#home-card #card-div .card-directory-body small {
+    color: #7a8d9b;
+    font-size: 12px;
+    line-height: 1.5;
 }
 #home-head {
     display: flex;
@@ -835,22 +968,26 @@ body::-webkit-scrollbar-track {
 }
 .timeline-content {
     background: #fff;
-    border: 1px solid #0002;
-    border-radius: 3px;
+    border: 1px solid #dbe5f2;
+    border-radius: 18px;
+    box-shadow: 0 14px 30px #d6e0ec45;
     margin-left: 17.5px;
-    padding: 24px;
-    transition: box-shadow 0.5s;
+    padding: 28px 34px;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
 }
 .timeline-content:hover {
-    box-shadow: 0 2px 8px #00000017;
+    border-color: #c7d8f4;
+    box-shadow: 0 18px 36px #c9d8ea70;
+    transform: translateY(-3px);
 }
 .timeline-tail {
     background: #fff;
-    border: 2px solid #a5c2f5;
+    border: 3px solid #a5c2f5;
     border-radius: 50%;
-    height: 7px;
+    box-shadow: 0 0 0 6px #edf4ff;
+    height: 10px;
     position: absolute;
-    width: 7px;
+    width: 10px;
 }
 #home-head #home-info .info .wrap #home-typed-line {
     align-items: center;

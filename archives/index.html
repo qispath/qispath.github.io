@@ -70,12 +70,7 @@
         
         <a href="/archives">
             <i class="fa-solid fa-box-archive fa-fw"></i>
-            <span>&ensp;归档</span>
-        </a>
-        
-        <a href="/categories">
-            <i class="fa-solid fa-bookmark fa-fw"></i>
-            <span>&ensp;分类</span>
+            <span>&ensp;归档分类</span>
         </a>
         
         <a href="/tags">
@@ -116,16 +111,7 @@
                         <div style="min-width: 20px; max-width: 50px; width: 10%">
                             <i class="fa-solid fa-box-archive fa-fw"></i>
                         </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
-                    </div>
-                </a>
-                
-                <a href="/categories">
-                    <div class="item">
-                        <div style="min-width: 20px; max-width: 50px; width: 10%">
-                            <i class="fa-solid fa-bookmark fa-fw"></i>
-                        </div>
-                        <div style="min-width: 100px; max-width: 150%; width: 20%">分类</div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档分类</div>
                     </div>
                 </a>
                 
@@ -167,6 +153,34 @@
         <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
             
 <div id="archives">
+    <div class="archive-hub">
+        <div class="archive-hub-copy">
+            <h2>归档分类</h2>
+            <p>按时间线浏览文章，也可以从分类快速进入。</p>
+        </div>
+        <div class="categories-tags archive-category-links">
+            <span>
+                <a href="/archives" style="background: linear-gradient(120deg, #9abbf7 0%, #ffbbf4 100%)">
+                    <span class="icon">
+                        <i class="fa-solid fa-layer-group fa-fw"></i>
+                    </span>
+                    全部 · 1
+                </a>
+            </span>
+            
+            
+            
+            <span>
+                <a href="/categories/web%E5%AE%89%E5%85%A8/" style="background: #00bcd4">
+                    <span class="icon">
+                        <i class="fa-solid fa-bookmark fa-fw"></i>
+                    </span>
+                    web安全 · 1
+                </a>
+            </span>
+            
+        </div>
+    </div>
     
     <div id="timeline-wrap" ref="timeline">
         
@@ -197,7 +211,7 @@
                         
                         <span class="tag">
                             
-                            <a href="/tags/web%E5%AE%89%E5%85%A8/" style="color: #ffa2c4">
+                            <a href="/tags/web%E5%AE%89%E5%85%A8/" style="color: #00bcd4">
                                 web安全
                             </a>
                         </span>
