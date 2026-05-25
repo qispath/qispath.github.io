@@ -108,28 +108,33 @@
 }
 #home-card {
     align-self: flex-start;
-    max-height: 80vh;
-    overflow: auto;
+    max-height: none;
+    overflow: visible;
     position: sticky;
     top: 10vh;
     width: 300px;
 }
 #home-card .home-card-stack {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     gap: 22px;
+    overflow: visible;
     padding-bottom: 10px;
+    width: 100%;
 }
 #home-card #card-style {
     background: #fff;
     border: none;
+    box-sizing: border-box;
     border-radius: 28px;
     box-shadow: 0 18px 42px #c7d7eb75;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    overflow: hidden;
     text-align: center;
-    width: 300px;
+    width: 100%;
 }
 #home-card #card-div {
     overflow: visible;
@@ -299,9 +304,12 @@
 .card-posts-style {
     background: linear-gradient(135deg, #fff8dc 0%, #fff1bf 100%);
     border: 1px solid #f4df95;
+    box-sizing: border-box;
     border-radius: 28px;
     box-shadow: 0 18px 42px #e5d59766;
+    overflow: hidden;
     padding: 22px 20px;
+    width: 100%;
 }
 .card-posts-header {
     margin-bottom: 16px;
