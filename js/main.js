@@ -23,12 +23,16 @@ const app = Vue.createApp({
         window.addEventListener("scroll", this.handleScroll, true);
         window.addEventListener("focus", this.handleWindowFocus);
         window.addEventListener("blur", this.handleWindowBlur);
+        document.addEventListener("pointerdown", this.handlePointerRipple, {
+            passive: true,
+        });
         this.render();
     },
     beforeUnmount() {
         window.removeEventListener("scroll", this.handleScroll, true);
         window.removeEventListener("focus", this.handleWindowFocus);
         window.removeEventListener("blur", this.handleWindowBlur);
+        document.removeEventListener("pointerdown", this.handlePointerRipple);
         if (this.titleTimer) {
             window.clearTimeout(this.titleTimer);
         }
@@ -94,6 +98,30 @@ const app = Vue.createApp({
         },
         handleWindowBlur() {
             this.setPageTitle("加纳~");
+        },
+        handlePointerRipple(event) {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                return;
+            }
+            if (event.button !== undefined && event.button !== 0 && event.pointerType !== "touch") {
+                return;
+            }
+            if (event.clientX === 0 && event.clientY === 0) {
+                return;
+            }
+
+            const ripple = document.createElement("span");
+            ripple.className = "site-click-ripple";
+            ripple.style.left = `${event.clientX}px`;
+            ripple.style.top = `${event.clientY}px`;
+            document.body.appendChild(ripple);
+            ripple.addEventListener(
+                "animationend",
+                () => {
+                    ripple.remove();
+                },
+                { once: true }
+            );
         },
         render() {
             for (let i of this.renderers) i();
