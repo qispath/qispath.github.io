@@ -672,6 +672,83 @@
 .card-post-empty p {
     margin: 0;
 }
+.card-site-style {
+    background: linear-gradient(135deg, rgba(249, 252, 255, 0.78) 0%, rgba(230, 240, 255, 0.72) 100%);
+    border: 1px solid rgba(205, 221, 246, 0.9);
+    border-radius: 28px;
+    box-shadow: 0 18px 42px #c5d6eb70;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    overflow: hidden;
+    padding: 22px 20px;
+    transition: background 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+    width: 100%;
+}
+.card-site-style:hover {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.88) 0%, rgba(239, 247, 255, 0.82) 100%);
+    border-color: #bfd5fb;
+    box-shadow: 0 22px 40px #b9cae57a;
+    transform: translateY(-6px);
+}
+.card-site-header {
+    margin-bottom: 16px;
+}
+.card-site-title {
+    align-items: center;
+    display: flex;
+    gap: 14px;
+}
+.card-site-title-icon {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.68);
+    border-radius: 16px;
+    box-shadow: 0 10px 22px #d7e5f65c;
+    color: #5f8fda;
+    display: inline-flex;
+    flex: 0 0 42px;
+    font-size: 20px;
+    height: 42px;
+    justify-content: center;
+}
+.card-site-title h3 {
+    color: #27444c;
+    font-size: 18px;
+    margin: 0 0 4px;
+}
+.card-site-title p {
+    color: #7a8d9b;
+    font-size: 12px;
+    margin: 0;
+}
+.card-site-metrics {
+    display: grid;
+    gap: 12px;
+}
+.card-site-metric {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.74);
+    border: 1px solid rgba(205, 222, 248, 0.95);
+    border-radius: 20px;
+    display: flex;
+    justify-content: space-between;
+    padding: 14px 16px;
+    transition: background 0.28s ease, box-shadow 0.28s ease, transform 0.28s ease;
+}
+.card-site-metric:hover {
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 16px 28px #bfd3ee70;
+    transform: translateY(-3px);
+}
+.card-site-label {
+    color: #5c6b72;
+    font-size: 14px;
+    font-weight: 600;
+}
+.card-site-value {
+    color: #27444c;
+    font-size: 15px;
+    font-weight: 800;
+}
 #home-head {
     display: flex;
     height: 100vh;
