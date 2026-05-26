@@ -1887,6 +1887,7 @@ ol li {
     }
     #home-posts-wrap {
         max-width: 1200px;
+        padding-top: 52px;
     }
     #menu #desktop-menu {
         display: block;
@@ -1917,6 +1918,9 @@ ol li {
     #home-posts-wrap,
     #archives {
         width: 800px;
+    }
+    #home-posts-wrap {
+        padding-top: 40px;
     }
     .links-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
