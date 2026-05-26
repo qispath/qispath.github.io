@@ -814,9 +814,11 @@
     opacity: 0.45;
     transform: rotate(120deg);
 }
-#home-head #home-info,
-#home-posts {
+#home-head #home-info {
     margin: auto;
+}
+#home-posts {
+    margin: 0;
 }
 #home-posts .page-current {
     align-items: center;
@@ -997,11 +999,12 @@
     margin-top: 18px;
 }
 #home-posts-wrap {
+    align-items: flex-start;
     background: transparent;
     border-radius: 10px;
     display: flex;
     margin: auto;
-    padding: 20px;
+    padding: 8px 20px 20px;
 }
 #home-posts-wrap,
 #archives,
@@ -1875,7 +1878,7 @@ ol li {
         width: 500px;
     }
     #home-posts {
-        margin-right: 50px;
+        margin: 0 50px 0 0;
         width: 850px;
     }
     #home-posts .post {
@@ -1897,7 +1900,7 @@ ol li {
         width: 900px;
     }
     .home-posts-wrap-no-card #home-posts {
-        margin: auto;
+        margin: 0 auto;
     }
     ul,
     ol {
