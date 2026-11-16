@@ -44,7 +44,7 @@
         toggle.addEventListener('click', function () { setOpen(true); });
 
         // wide screens: open by default; narrow: collapsed to the floating button
-        setOpen(window.innerWidth >= 1320);
+        setOpen(window.innerWidth >= 768);
 
         // smooth scroll with fixed nav offset
         list.addEventListener('click', function (e) {
