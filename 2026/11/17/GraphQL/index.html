@@ -47,7 +47,7 @@
 
 
 
-<link rel="stylesheet" href="/css/main.css?v=1794834090138" />
+<link rel="stylesheet" href="/css/main.css?v=1794834358677" />
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
@@ -164,7 +164,7 @@
             <span class="icon">
                 <i class="fa-solid fa-calendar fa-fw"></i>
             </span>
-            2026/11/16
+            2026/11/17
         </span>
         
         <span class="category">
@@ -185,28 +185,28 @@
             
             <span class="tag">
                 
-                <a href="/tags/CTF/" style="color: #00bcd4">
+                <a href="/tags/CTF/" style="color: #ffa2c4">
                     CTF
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/GraphQL/" style="color: #00a596">
+                <a href="/tags/GraphQL/" style="color: #00bcd4">
                     GraphQL
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/API%E5%AE%89%E5%85%A8/" style="color: #00bcd4">
+                <a href="/tags/API%E5%AE%89%E5%85%A8/" style="color: #00a596">
                     API安全
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/%E6%B3%A8%E5%85%A5/" style="color: #ffa2c4">
+                <a href="/tags/%E6%B3%A8%E5%85%A5/" style="color: #ff7d73">
                     注入
                 </a>
             </span>
@@ -216,7 +216,8 @@
     </div>
     
     <div class="content" v-pre>
-        <h2 id="什么是GraphQL"><a href="#什么是GraphQL" class="headerlink" title="什么是GraphQL"></a>什么是GraphQL</h2><p>GraphQL 是一种<strong>API 查询语言</strong>，核心思想是客户端按需声明想要哪些字段的数据，后端<strong>按请求返回对应内容</strong>，不像 REST 那样接口返回固定结构。 </p>
+        <p>GraphQL之前做题的时候遇到了，但是没有深究，最近新生赛出了相关的题正好研究研究</p>
+<h2 id="什么是GraphQL"><a href="#什么是GraphQL" class="headerlink" title="什么是GraphQL"></a>什么是GraphQL</h2><p>GraphQL 是一种<strong>API 查询语言</strong>，核心思想是客户端按需声明想要哪些字段的数据，后端<strong>按请求返回对应内容</strong>，不像 REST 那样接口返回固定结构。 </p>
 <p>它靠一套类型系统（Type，包含标量、对象类型，配合类型修饰符控制必填 &#x2F; 数组）定义数据模型；</p>
 <p>通过 <strong>Schema</strong> 定义根操作：<strong>query（查询）、mutation（修改）、subscription（订阅推送）</strong>；</p>
 <p>再由 <strong>Resolver</strong> 解析函数负责实际取数，递归解析查询直到标量类型，Resolver 内部可以对接 SQL、REST、RPC 等任意数据源，实现前后端解耦。</p>
