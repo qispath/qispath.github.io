@@ -42,6 +42,7 @@
 
 <script src="/js/lib/toc.js"></script>
 
+<script src="/js/lib/backtop.js"></script>
 
 
 
@@ -49,7 +50,7 @@
 
 
 
-<link rel="stylesheet" href="/css/main.css?v=1794839762325" />
+<link rel="stylesheet" href="/css/main.css?v=1794840051872" />
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
@@ -194,14 +195,14 @@
             
             <span class="tag">
                 
-                <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" style="color: #03a9f4">
+                <a href="/tags/%E5%8E%9F%E5%9E%8B%E9%93%BE%E6%B1%A1%E6%9F%93/" style="color: #00a596">
                     原型链污染
                 </a>
             </span>
             
             <span class="tag">
                 
-                <a href="/tags/Flask/" style="color: #ffa2c4">
+                <a href="/tags/Flask/" style="color: #03a9f4">
                     Flask
                 </a>
             </span>
@@ -209,16 +210,6 @@
         </span>
         
     </div>
-    
-    <nav id="post-toc" class="post-toc" aria-label="文章目录">
-        <div class="post-toc-header">
-            <i class="fa-solid fa-list-ul fa-fw"></i>
-            <span>目录</span>
-            <i class="fa-solid fa-chevron-down post-toc-toggle fa-fw"></i>
-        </div>
-        <ul class="post-toc-list"></ul>
-    </nav>
-    
     
     <div class="content" v-pre>
         <h1 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h1><p> <strong>原型：</strong></p>
@@ -1214,5 +1205,21 @@ def index():
 
 
     
+    
+    <button id="post-toc-toggle" class="post-toc-toggle" type="button" aria-label="文章目录" title="显示目录">
+        <i class="fa-solid fa-list-ul fa-fw"></i>
+    </button>
+    <nav id="post-toc" class="post-toc hidden" aria-label="文章目录">
+        <div class="post-toc-header">
+            <i class="fa-solid fa-list-ul fa-fw"></i>
+            <span>目录</span>
+            <i class="fa-solid fa-xmark fa-fw post-toc-close" title="隐藏目录"></i>
+        </div>
+        <ul class="post-toc-list"></ul>
+    </nav>
+    
+    <button id="back-to-top" type="button" aria-label="回到顶部" title="回到顶部">
+        <i class="fa-solid fa-arrow-up fa-fw"></i>
+    </button>
 </body>
 </html>

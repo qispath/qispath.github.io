@@ -42,6 +42,7 @@
 
 <script src="/js/lib/toc.js"></script>
 
+<script src="/js/lib/backtop.js"></script>
 
 
 
@@ -49,7 +50,7 @@
 
 
 
-<link rel="stylesheet" href="/css/main.css?v=1794839762326" />
+<link rel="stylesheet" href="/css/main.css?v=1794840051873" />
 
 <meta name="generator" content="Hexo 7.3.0"></head>
 <body>
@@ -196,16 +197,6 @@
         
     </div>
     
-    <nav id="post-toc" class="post-toc" aria-label="文章目录">
-        <div class="post-toc-header">
-            <i class="fa-solid fa-list-ul fa-fw"></i>
-            <span>目录</span>
-            <i class="fa-solid fa-chevron-down post-toc-toggle fa-fw"></i>
-        </div>
-        <ul class="post-toc-list"></ul>
-    </nav>
-    
-    
     <div class="content" v-pre>
         <p>这里是我的个人博客，主要记录学习、折腾和喜欢的内容。</p>
 <h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><pre><code class="bash">hexo new &quot;文章标题&quot;
@@ -263,5 +254,21 @@
 
 
     
+    
+    <button id="post-toc-toggle" class="post-toc-toggle" type="button" aria-label="文章目录" title="显示目录">
+        <i class="fa-solid fa-list-ul fa-fw"></i>
+    </button>
+    <nav id="post-toc" class="post-toc hidden" aria-label="文章目录">
+        <div class="post-toc-header">
+            <i class="fa-solid fa-list-ul fa-fw"></i>
+            <span>目录</span>
+            <i class="fa-solid fa-xmark fa-fw post-toc-close" title="隐藏目录"></i>
+        </div>
+        <ul class="post-toc-list"></ul>
+    </nav>
+    
+    <button id="back-to-top" type="button" aria-label="回到顶部" title="回到顶部">
+        <i class="fa-solid fa-arrow-up fa-fw"></i>
+    </button>
 </body>
 </html>
