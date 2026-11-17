@@ -1740,7 +1740,8 @@ pre {
     border-radius: 15px;
     box-shadow: 0 2px 12px 0 #0000001a;
     margin: 25px 0;
-    overflow: hidden;
+    max-width: 100%;
+    overflow: auto;
     white-space: normal;
 }
 pre,
