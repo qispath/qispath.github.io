@@ -16,18 +16,25 @@
         if (!content || !toc || !toggle) return;
 
         var list = toc.querySelector('.post-toc-list');
-        var heads = content.querySelectorAll('h2[id], h3[id], h4[id]');
+        var heads = content.querySelectorAll('h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]');
         if (!heads.length) {
             toc.style.display = 'none';
             toggle.style.display = 'none';
             return;
         }
 
+        var arr = Array.prototype.slice.call(heads);
+        var minLevel = arr.reduce(function (m, h) {
+            var lv = parseInt(h.tagName.substring(1), 10);
+            return lv < m ? lv : m;
+        }, 6);
+
         var html = '';
-        Array.prototype.forEach.call(heads, function (h) {
+        arr.forEach(function (h) {
             var level = parseInt(h.tagName.substring(1), 10);
+            var depth = level - minLevel + 1;
             html +=
-                '<li class="post-toc-item toc-level-' + level + '">' +
+                '<li class="post-toc-item toc-level-' + depth + '">' +
                 '<a href="#' + encodeURIComponent(h.id) + '" data-target="' + attr(h.id) + '">' +
                 esc(h.textContent.trim()) +
                 '</a></li>';
