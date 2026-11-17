@@ -1752,6 +1752,9 @@ code,
     font-family: "Fira Code", "Noto Sans SC", monospace;
 }
 table:not(.hljs-ln) {
+    display: block;
+    max-width: 100%;
+    overflow-x: auto;
     margin: 15px 0;
 }
 table:not(.hljs-ln) td:nth-child(even) {
